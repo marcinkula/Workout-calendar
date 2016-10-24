@@ -1,8 +1,12 @@
 $(function() {
-    console.log('Start!');
+    console.log('Project start!');
+
+    function changeMainView() {
+        console.log('Date changed!');
+    }
 
     // Initializing DatePicker
-    $('#datepicker').datepicker({
-
-    });
+    $('#datepicker')
+        .datepicker({})
+        .on("changeDate", changeMainView);
 });
