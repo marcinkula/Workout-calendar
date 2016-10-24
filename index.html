@@ -14,6 +14,23 @@
     <div class="container">
         <div class="main">
             <h1 id="selected-date"></h1>
+
+            <div class="dropdown">
+              <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add Exercise
+                <span class="caret"></span>
+              </button>
+              <ul id="exercise-list" class="dropdown-menu" aria-labelledby="dLabel">
+                <li>Back</li>
+                <li>Legs</li>
+                <li>Shoulders</li>
+                <li>Chest</li>
+              </ul>
+            </div>
+
+            <ul id="selected-exercises">
+
+            </ul>
         </div>
         <div class="calendar">
             <div id="datepicker" data-date="today()"></div>
