@@ -1,0 +1,12 @@
+
+.main {
+    width: 400px;
+    height: 600px;
+    background-color: rgb(240,240,240);
+    float: left;
+}
+
+.calendar {
+    width: 220px;
+    float: right;
+}
