@@ -5,16 +5,6 @@ $(function() {
     // Formatting the date
     $('#selected-date').html(moment().format('YYYY-MM-DD'));
 
-    var muscleGroup = {
-        "chest" : ["wyciskanie sztangi", "pompki"],
-        "back" : ["podciaganie", "przyciaganie", "martwy ciag", "wykroki"],
-        "shoulders" : ["wyciskanie hantli"],
-        "legs" : ["przysiady", "wypychanie nog"],
-        "biceps" : ["uginanie ramion"],
-        "triceps": ["wyciskanie francuskie"]
-    };
-
-
     //DB
     var db = {
         "2016-10-01": {
@@ -64,37 +54,6 @@ $(function() {
         $('#exercise-detials').html(detailedTemplate);
     });
 
-    // //db["2016-10-24"].parties.legs = ["przysiady"];
-
-    $('#exercise-list > li').click(function() {
-
-        // TODO: Sprawdzanie czy juz jest na liscie dane cwiczenie
-
-        var exercise = $(this).html().toLowerCase();
-
-        var specificExerciseList = muscleGroup[exercise];
-        console.log('specificExerciseList: ', specificExerciseList);
-
-        function createListItems(specificExerciseList) {
-            var resultString = '';
-            for (var i = 0; i < specificExerciseList.length; i++) {
-                resultString += '<li>' + specificExerciseList[i] + '</li>'
-            }
-            return resultString;
-        }
-
-        $('#selected-exercises').append('<li>' + exercise + '<div class="dropdown">' +
-                      '<button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-                        'Add Specific Exercises<span class="caret"></span></button>' +
-                        '<ul id="specific-exercise-list-' + exercise + '" class="dropdown-menu" aria-labelledby="dLabel">' +
-                        createListItems(specificExerciseList)
-                        + '</ul>' +
-                    '</div></li>');
-    });
-
-
-
-
     function changeMainView() {
         // http://bootstrap-datepicker.readthedocs.io/en/latest/markup.html
         // This is to save the embedded datepicker:
@@ -122,95 +81,5 @@ $(function() {
             format: "yyyy-mm-dd"
         })
         .on("changeDate", changeMainView);
-
-
-
-
-
-    var okButton = $('#accept');
-    var ulPlannedExcercises = $("#plannedexcercise");
-
-    okButton.on('click', function(e){
-        e.preventDefault();
-        var newLi = $("<li>");
-
-        var label1 = $("<label>Ilisc serii</label>");
-        var input1 = $("<input type='number'>");
-
-        label1.append(input1);
-
-        var label2 = $("<label>Liczba powtorzen</label>");
-        var input2 = $("<input type='number'>");
-
-        label2.append(input2);
-
-    newLi.append(label1).append(label2);
-    ulPlannedExcercises.append(newLi);
-
-});
-
-
-
-
-//
-// var partieMiesniowe = {
-//     "oko" : ["mruganie", "plakanie"],
-//     "ucho" : ["zatykanie", "zamykanie", "zalewanie", "sluchanie"],
-//     "lydka" : ["wzniosy"],
-//     "kark" : ["spina", "lamanie"],
-// };
-//
-//
-// var indyvidualExerciseList = partieMiesniowe[exercise];
-//
-// function createExcerciseList(indyvidualExerciseList) {
-//     var resultStr = '';
-//     for (var i = 0; i < specificExerciseList.length; i++) {
-//         resultStr += '<li>' + indyvidualExerciseList[i] + '</li>'
-//     }
-//     return resultString;
-// }
-//
-// var partieMiesniowe = {
-//     "oko" : ["mruganie", "plakanie"],
-//     "ucho" : ["zatykanie", "zamykanie", "zalewanie", "sluchanie"],
-//     "lydka" : ["wzniosy"],
-//     "kark" : ["spina", "lamanie"],
-// };
-
-
-// <select name="muscle_type">
-//     <option value="1">Oko</option>
-//     <option value="2">Ucho</option>
-//     <option value="3">Lydka</option>
-//     <option value="4">Kark</option>
-// </select>
-
-
-
-var dropdown = $('#muscle_type');
-console.log(dropdown.val());
-
-var value = $('select#muscle_type option:selected').val();
-console.log(value);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
