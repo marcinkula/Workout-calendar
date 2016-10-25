@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>Kalendarz cwiczen</title>
+
 <head>
     <meta charset="UTF-8">
     <title>Kalendarz cwiczen</title>
@@ -15,18 +16,95 @@
         <div class="main">
             <h1 id="selected-date"></h1>
 
-            <div class="dropdown">
-              <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add Exercise
+            <!-- <div class="dropdown">
+                <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose Muscle Group
                 <span class="caret"></span>
               </button>
-              <ul id="exercise-list" class="dropdown-menu" aria-labelledby="dLabel">
-                <li>Back</li>
-                <li>Legs</li>
-                <li>Shoulders</li>
-                <li>Chest</li>
-              </ul>
-            </div>
+                <ul id="exercise-list" class="dropdown-menu" aria-labelledby="dLabel">
+                    <li>Back</li>
+                    <li>Legs</li>
+                    <li>Shoulders</li>
+                    <li>Chest</li>
+                    <li>Bicepc</li>
+                    <li>Triceps</li>
+                </ul>
+            </div> -->
+    <div>
+        <label>Grupa miesniowa</label>
+        <select id="musclegroup" name="musclegroup" placeholder="Phantasyland">
+            <option></option>
+            <option>Klatka piersiowa</option>
+            <option>Plecy</option>
+            <option>Barki</option>
+            <option>Biceps</option>
+            <option>Triceps</option>
+            <option>Nogi</option>
+        </select>
+        <br/><br/>
+
+        <label>Location</label>
+        <select id="exercise" name="exercise" placeholder="Exercises"></select>
+    </div>
+    <div id="exercise-detials"></div>
+
+
+
+
+
+
+
+    <!-- <form>
+        <label>Partia miesniowa
+        <select name="muscle_type">
+            <option value="1">Oko</option>
+            <option value="2">Ucho</option>
+            <option value="3">Lydka</option>
+            <option value="4">Kark</option>
+        </select>
+        </label>
+
+        <label>Cwiczenia
+        <select name="exercise_type">
+            <option value="1">Wyciskanie sztangi</option>
+            <option value="2">Rozpietki</option>
+            <option value="3">Pompki</option>
+            <option value="4">Wyciskanie hantli</option>
+        </select> -->
+        <!-- </label> -->
+
+        <!-- <label> Ilosc serii
+        <input type="number">
+        </label>
+        <label> Liczba powtorzen
+        <input type="number">
+        </label> -->
+        <!-- <input id="accept" type="submit" value="OK">
+    </form>
+
+
+    <ul id="plannedexcercise"> -->
+        <!--<li>
+            <input>Task 1</input>
+            <button>Delete</button>
+            <button>Complete</button>
+        </li>
+        <li class="done">
+            <h1>Task 2</h1>
+            <button>Delete</button>
+            <button>Complete</button>
+        </li>-->
+    </ul>
+
+
+
+
+
+
+
+
+
+
 
             <ul id="selected-exercises">
 
