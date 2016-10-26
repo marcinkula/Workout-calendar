@@ -19,15 +19,24 @@ $(function() {
     };
 
     var muscleGroups = {
-        'Klatka piersiowa': ['Wyciskanie sztangi na ławce poziomej','Wyciskanie hantli na ławce poziomej',
-        'Wyciskanie sztangi głową w górę','Wyciskanie hantli głową w górę','Wyciskanie sztangi głową w dół',
-        'Wyciskanie hantli głową w dół','Rozpiętki na ławce poziomej', 'Rozpiętki głową do góry', 'Rozpiętki głową w dół',
-        'Krzyżowanie linek wyciągu w staniu', 'Wyciskania poziome na maszynie', 'Przenoszenie hantli w leżeniu w poprzek ławki'],
-        'Plecy': ['Podciąganie na drążku', 'Wiosłowanie sztangą','Wiosłowanie hantlą'],
-        'Barki': ['Wyciskanie hantli nad głowę', 'Wyciskanie hantli nad głową','Szrugsy', 'Wzniosy hantli bokiem'],
+        'Klatka piersiowa': ['Wyciskanie sztangi na ławce poziomej', 'Wyciskanie hantli na ławce poziomej',
+            'Wyciskanie sztangi głową w górę', 'Wyciskanie hantli głową w górę', 'Wyciskanie sztangi głową w dół',
+            'Wyciskanie hantli głową w dół', 'Rozpiętki na ławce poziomej', 'Rozpiętki głową do góry', 'Rozpiętki głową w dół',
+            'Krzyżowanie linek wyciągu w staniu', 'Wyciskania poziome na maszynie', 'Przenoszenie hantli w leżeniu w poprzek ławki'
+        ],
+
+        'Plecy': ['Podciąganie na drążku szerokim nachwytem', 'Podciąganie na drążku w chwycie neutralnym', 'Podciąganie na drążku podchwytem',
+            'Podciąganie sztangi w opadzie tułowia', 'Podciąganie hantli w opadzie tułowia', 'Podciąganie końca sztangi w opadzie',
+            'Przyciąganie linki wyciągu dolnego w siadzie', 'Przyciąganie linki wyciągu górnego w siadzie', 'Ściąganie drążka wyciągu górnego szerokim nachwytem',
+            'Ściąganie drążka wyciągu górnego podchwytem', 'Ściąganie drążka wyciągu górnego chwytem neutralnym', 'Unoszenie tułowia z opadu',
+            'Martwy ciąg'
+        ],
+
+        'Barki': ['Wyciskanie hantli nad głowę', 'Wyciskanie hantli nad głową', 'Szrugsy', 'Wzniosy hantli bokiem'],
         'Biceps': ['Uginanie ramion ze sztangą prostą', 'Uginanie ramion z hantlami', 'Uginanie ramion ze sztangą łamaną'],
         'Triceps': ['Wyciskanie hantli zza głowy', 'Wyciskanie francuskie sztangi leżąc', 'Pompki na poręczach'],
-        'Nogi': ['Przysiady','Wypychanie nóg na suwnicy','Prostowaie nóg siedząc', 'Prostowanie nóg leżąc'],
+        'Nogi': ['Przysiady', 'Wypychanie nóg na suwnicy', 'Prostowaie nóg siedząc', 'Prostowanie nóg leżąc'],
+        'Brzuch': ['Brzuszki', 'Abbc', 'DDS', 'RRR'],
 
     }
 
@@ -130,12 +139,12 @@ $(function() {
         console.log('bodyParts', bodyParts);
         for (var item in bodyParts) {
             console.log(item);
-            resultHtml += '<h3>' + item + '</h3>';//kazdy body part bedzie w h3
+            resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
             console.log('db[currentDate][item]', db[currentDate][item]);
 
 
             var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
-            for (var itemChild in exerciseObj) {//iteruje po obiekcie z cwiczeniami
+            for (var itemChild in exerciseObj) { //iteruje po obiekcie z cwiczeniami
                 console.log(itemChild);
                 resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
                 console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
