@@ -125,14 +125,11 @@ $(function() {
         //dopiero jak zmiany sa zapisane w modelu to moge renderowac wynik
         renderAfterSave();
 
+        //function uploading data to Firebase
         	firebase
         		.database()
         		.ref('db')
         		.set(db);
-
-
-
-
 
     });
 
@@ -151,6 +148,9 @@ $(function() {
             console.log(item);
             resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
             console.log('db[currentDate][item]', db[currentDate][item]);
+
+            //guzik do kasowania
+            resultHtml += '<button>Delete</button>';
 
 
             var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
@@ -186,6 +186,86 @@ $(function() {
     function today() {
         return new Date(); //local date on my computer in js
     }
+
+    // $('#save').on('click', function (event) {
+    // 	firebase.database().ref('colorset').set(elements);
+    // });
+    //
+    // $('#load').on('click', function (event) {
+    // 	firebase.database().ref('colorset').on('value', function (snapshot) {
+    // 		elements = snapshot.val();
+    //
+    // 		render();
+    // 	});
+    // });
+
+
+    $('#loadDetails').on('click', function (event) {
+    	console.log('download');
+
+    	firebase
+    		.database()
+    		.ref('db') //odwołujemy się do konkretnego klucza
+    		.on('value', function () {
+                console.log(db["2016-10-26"]);
+
+
+
+
+
+                // function renderAfterSave() {
+                //     $('#savedExercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
+                //     var resultHtml = ''; //tu bede doklejac wszystko
+                //     var bodyParts = db[currentDate]; //klatka piersiowa, plecy, barki itd
+                //     console.log('bodyParts', bodyParts);
+                //     for (var item in bodyParts) {
+                //         console.log(item);
+                //         resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
+                //         console.log('db[currentDate][item]', db[currentDate][item]);
+                //
+                //
+                //         var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
+                //         for (var itemChild in exerciseObj) { //iteruje po obiekcie z cwiczeniami
+                //             console.log(itemChild);
+                //             resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
+                //             console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
+                //             resultHtml += '<h5>Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
+                //                 ' <br>liczba powtorzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
+                //         }
+                //     }
+                //
+                //     $('#savedExercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
+                // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    		});
+    });
+
+
+
+
+
 
     // Initializing DatePicker
     $('#datepicker')
