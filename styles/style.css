@@ -10,3 +10,15 @@
     width: 220px;
     float: right;
 }
+
+h3 {
+    color: red;
+}
+
+h4 {
+    color: blue;
+}
+
+h5 {
+    color:green;
+}
