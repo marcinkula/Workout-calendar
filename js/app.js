@@ -75,7 +75,7 @@ $(function() {
         // console.log('repeatCount: ', repeatCount);
 
         // Check if any body part is selected
-        if (selectedBodyPart.length < 1) {
+        if (selectedBodyPart.length < 1)  {
             console.log('Niewypelniony forumlarz!');
             return;
         }
@@ -124,6 +124,16 @@ $(function() {
         }
         //dopiero jak zmiany sa zapisane w modelu to moge renderowac wynik
         renderAfterSave();
+
+        	firebase
+        		.database()
+        		.ref('db')
+        		.set(db);
+
+
+
+
+
     });
 
 
@@ -148,7 +158,7 @@ $(function() {
                 console.log(itemChild);
                 resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
                 console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
-                resultHtml += '<h5Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
+                resultHtml += '<h5>Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
                     ' <br>liczba powtorzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
             }
         }

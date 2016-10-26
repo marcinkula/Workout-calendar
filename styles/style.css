@@ -1,8 +1,8 @@
 
 .main {
-    width: 400px;
-    height: 600px;
-    background-color: rgb(240,240,240);
+    width: 60vw;
+    height: 100vh;
+    padding-left: 40px;
     float: left;
 }
 
@@ -10,15 +10,22 @@
     width: 220px;
     float: right;
 }
+#selected-date {
+    text-align: center;
+}
 
 h3 {
-    color: red;
+    color: #c9302c;
+    font-weight: bolder;
 }
 
 h4 {
-    color: blue;
+    color: #286090;
+    font-weight: bolder;
 }
 
 h5 {
-    color:green;
+    color:#449d44;
+    font-weight: bolder;
+
 }
