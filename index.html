@@ -6,22 +6,32 @@
     <meta charset="UTF-8">
     <title>Kalendarz cwiczen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="styles/style.css">
 
 </head>
 
-<body>
+<body id="top">
+
+    <nav>
+        <a href="#top">Kalendarz treningowy</a>
+    </nav>
+
     <div class="container">
+        <div class="row">
 
-        <div class="main">
-            <h1 id="selected-date"></h1>
-            <div id="savedExercises"></div>
+            <div class="calendar col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div id="datepicker" data-date="today()"></div>
+            </div>
 
-            <div>
-                <label>Grupa miesniowa</label>
-                <select id="musclegroup" name="musclegroup">
+            <div class="main col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h3 id="selected-date"></h3>
+                <div id="savedExercises"></div>
+                <div>
+                    <label>Grupa miesniowa</label>
+                    <select id="musclegroup" name="musclegroup">
                     <option></option>
                     <option>Klatka piersiowa</option>
                     <option>Plecy</option>
@@ -30,34 +40,31 @@
                     <option>Triceps</option>
                     <option>Nogi</option>
                     <option>Brzuch</option>
-
                 </select>
-                <br/><br/>
-                <label>Typ cwiczenia</label>
-                <select id="exercise" name="exercise" placeholder="Exercises"></select>
+                    <br/><br/>
+                    <label>Typ cwiczenia</label>
+                    <select id="exercise" name="exercise" placeholder="Exercises"></select>
+                </div>
+                <div id="exercise-detials"></div>
+                <button id="saveDetails" class="btn btn-success">Save</button>
             </div>
-            <div id="exercise-detials"></div>
-            <button id="saveDetails" class="btn btn-success">Save</button>
-            <button id="loadDetails" class="btn btn-warning">Download</button>
+
         </div>
 
-        <div class="calendar">
-            <div id="datepicker" data-date="today()"></div>
-        </div>
 
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyDJixZg0vfig2SpV1bMEc2ugUin9QNZtoQ",
-        authDomain: "workout-calendar-2ad96.firebaseapp.com",
-        databaseURL: "https://workout-calendar-2ad96.firebaseio.com",
-        storageBucket: "",
-        messagingSenderId: "270649545760"
-      };
-      firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDJixZg0vfig2SpV1bMEc2ugUin9QNZtoQ",
+            authDomain: "workout-calendar-2ad96.firebaseapp.com",
+            databaseURL: "https://workout-calendar-2ad96.firebaseio.com",
+            storageBucket: "",
+            messagingSenderId: "270649545760"
+        };
+        firebase.initializeApp(config);
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
