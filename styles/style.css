@@ -58,13 +58,15 @@ h3 {
 }
 
 h4 {
-    color: #537865;
+    color: #28473C;
     font-weight: bolder;
+    font-size: 15px;
+    margin-top: -5px;
+    margin-bottom: -7px;
 }
 
 h5 {
     color: #101010;
-    font-weight: bolder;
 }
 
 .btn-success {
@@ -84,7 +86,21 @@ button.remove-part.btn.btn-danger.btn-sm.glyphicon.glyphicon-trash {
     vertical-align: super;
 }
 
+#seriesCount {
+    text-align: center;
+    margin-top: 6px;
+}
+
+#repeatCount {
+    text-align: center;
+    margin: 6px 0;
+}
+
 /*calendar elements*/
+
+div.datepicker.datepicker-inline {
+    margin-top: 10px;
+}
 
 th.datepicker-switch {
     color: #7b1315;

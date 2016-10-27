@@ -49,11 +49,12 @@ $(function() {
         ],
 
 
-        'Nogi': ['Przysiady ze sztangą na barkach', 'Przysiady ze sztangą trzymaną z przodu', 'Przysiady na suwnicy skośnej',
-            'Prostowanie nóg w siadzie', 'Wypychanie ciężaru na suwnicy', 'Uginanie nóg w leżeniu', 'Przysiady wykroczne', 'Wysoki step za sztangą/sztangielkami',
-            'Odwodzenie nogi w tył', 'Ściąganie kolan w siadzie', 'Przywodzenie nóg do wewnątrz', 'Odwodzenie nóg na zewnątrz',
-            '”Martwy ciąg”na prostych nogach', 'Wspiecia na palce w staniu', 'Wspięcia na palce w siadzie', 'Wspięcia na palce na „HACK-MASZYNIE”'
+        'Nogi': ['”Martwy ciąg”na prostych nogach', 'Odwodzenie nóg na zewnątrz', 'Odwodzenie nogi w tył', 'Prostowanie nóg w siadzie',
+            'Przysiady ze sztangą na barkach', 'Przysiady ze sztangą trzymaną z przodu', 'Przysiady na suwnicy skośnej', 'Przysiady wykroczne',
+            'Przywodzenie nóg do wewnątrz', 'Ściąganie kolan w siadzie', 'Uginanie nóg w leżeniu', 'Wysoki step za sztangą/sztangielkami',
+            'Wspiecia na palce w staniu', 'Wspięcia na palce w siadzie', 'Wspięcia na palce na „HACK-MASZYNIE”', 'Wypychanie ciężaru na suwnicy'
         ],
+
 
 
         'Brzuch': ['Skłony w leżeniu płasko', 'Skłony w leżeniu głową w dół', 'Unoszenie nóg w leżeniu na skośnej ławce', 'Unoszenie nóg w zwisie na drążku',
@@ -67,8 +68,6 @@ $(function() {
         '<input type="number" data-toggle="tooltip" data-placement="right" title="Wpisz ilość serii" id="seriesCount" placeholder="Ilość serii"><br/>' +
         '<input type="number" data-toggle="tooltip" data-placement="right" title="Wpisz ilość powtórzeń" id="repeatCount" placeholder="Liczba powtórzen">' +
         '</div>';
-    //
-    // data-toggle="tooltip" data-placement="right" title="Tooltip on right"
 
     function saveDataToBackend() {
         firebase
@@ -80,9 +79,8 @@ $(function() {
     function getDataFromBackend() {
         firebase
             .database()
-            .ref('db') //odwołujemy się do konkretnego klucza
+            .ref('db')
             .on('value', function(data) {
-                console.log(data.val());
                 db = data.val();
                 renderView();
             });
@@ -90,30 +88,30 @@ $(function() {
 
     function renderView() {
 
-        $('#saved-exercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
-        var resultHtml = ''; //tu bede doklejac wszystko
-        var bodyParts = db[currentDate]; //klatka piersiowa, plecy, barki itd
-        console.log('bodyParts', bodyParts);
+        $('#saved-exercises').html(''); //Clearing my div
+        var resultHtml = ''; //string where the data will be put
+        var bodyParts = db[currentDate];
+        // console.log('bodyParts', bodyParts);
         for (var item in bodyParts) {
-            console.log(item);
-            resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
-            console.log('db[currentDate][item]', db[currentDate][item]);
+            // console.log(item);
+            resultHtml += '<h3>' + item + '</h3>'; //each body part will be put in h3
+            // console.log('db[currentDate][item]', db[currentDate][item]);
 
-            //guzik do kasowania
+            //removal button
             resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Usuń wybraną grupę mięśniową" data-date="' + currentDate + '" data-part="' + item + '"></button>'; //identyfikujemy co mamy wywalic
 
 
-            var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
-            for (var itemChild in exerciseObj) { //iteruje po obiekcie z cwiczeniami
-                console.log(itemChild);
-                resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
-                console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
-                resultHtml += '<h5>Ilość serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
+            var exerciseObj = db[currentDate][item]; //for each body part I create object containing all exercises
+            for (var itemChild in exerciseObj) { //itering through my object with exercises
+                // console.log(itemChild);
+                resultHtml += '<h4>' + itemChild + '</h4>'; //each exercise will be put in h4
+                // console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
+                resultHtml += '<h5>Ilość serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount don't change so I can get to them via dot
                     ' <br>Liczba powtórzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
             }
         }
 
-        $('#saved-exercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
+        $('#saved-exercises').html(resultHtml); //at the end I inject the above in the div#saved-exercises
     }
 
 
@@ -122,7 +120,7 @@ $(function() {
         // This is to save the embedded datepicker:
         var selectedDate = $('#datepicker').datepicker('getFormattedDate');
         console.log('selectedDate: ', selectedDate);
-        currentDate = selectedDate; //przypisuje wybrana date do zmiennej currentDate ktorej uzywam w innych czesciach aplikacji
+        currentDate = selectedDate; //Assigning the picked date to the currentDate date variable, it will be needed in other parts of my application
         $('#selected-date').html(selectedDate);
         getDataFromBackend();
         var selectedBodyPart = $('#musclegroup').val('');
@@ -139,34 +137,34 @@ $(function() {
     }
 
 
-    getDataFromBackend(); //pobieram dane z Firebase
+    getDataFromBackend(); //getting data from Firebase
 
     // http://momentjs.com - library for tormatting the date
     // We are setting current date here
 
     $('#selected-date').html(currentDate);
 
-    // Tworzenie zaleznej listy http://jsfiddle.net/arunpjohny/2pza5/
+    // Dependant select list creation http://jsfiddle.net/arunpjohny/2pza5/
     var exerciseElement = $('#exercise');
     $('#musclegroup').on("change", function() {
         var musclePart = $(this).val();
-        var exerciseArray = muscleGroups[musclePart] || []; //tablica dla specyficznego body part lub pusta tablica zeby w drugim wyswietlilo sie puste
+        var exerciseArray = muscleGroups[musclePart] || []; //array for a specific body or an empty array so that in other select there is un empty select too
 
-        var html = $.map(exerciseArray, function(exerciseItem) { // .map iteruje po tablicy, pierwsy element to tablica drugi to jkazdy element tablicy (tworzy option w selekcie)
+        var html = $.map(exerciseArray, function(exerciseItem) {
             return '<option value="' + exerciseItem + '">' + exerciseItem + '</option>'
-        }).join(''); //laczy wszystkie option value w jeden string
+        }).join('');
 
-        exerciseElement.html(html) //wstrzykuje powyzszego stringa w moj select
-        $('#exercise-detials').html(detailedTemplate); //na koncu doklejam templatke z imputami
+        exerciseElement.html(html) //injecting the above string in #exercise select
+        $('#exercise-details').html(detailedTemplate); //adding the template with inputs to div#exercise-details
     });
 
     $('body').on('change', 'input[type="number"]', function() {
-            if ($(this).val() < 0) {
-                $(this).val(0);
-            }
-        })
-        //Kiedy klikam na save
+        if ($(this).val() < 0) {
+            $(this).val(0);
+        }
+    })
 
+    //When clicking "Zapisz" button
     $('#save-details').on('click', function() {
         var selectedBodyPart = $('#musclegroup').val();
         var selectedExercise = $('#exercise').val();
@@ -179,17 +177,16 @@ $(function() {
             return;
         }
 
-        //Uaktualnianie modelu danych
+        //Updating database model
         // Check if there is a record in db with this date
         if (db[currentDate] !== undefined) {
-            console.log('Ta data juz jest w bazie');
+            // console.log('This date is already in the databse');
 
-            if (db[currentDate].hasOwnProperty(selectedBodyPart)) { //sprawdza czy ten obiekt z data ma dane property
-                console.log('Istnieje juz ten bodyPart dla tej daty');
+            if (db[currentDate].hasOwnProperty(selectedBodyPart)) { //check if this object has a given property
+                // console.log('The given bodypart already exists for this date');
 
-                if (db[currentDate][selectedBodyPart].hasOwnProperty(selectedExercise)) { //teraz sprawdzam czy istnieje cwiczenie
-                    // Istnieje juz zapisane to samo cwiczenie
-                    console.log('Istnieje juz zapisane to samo cwiczenie dla tego bodyPart');
+                if (db[currentDate][selectedBodyPart].hasOwnProperty(selectedExercise)) { //checking if the specific exercise exists
+                    // console.log('This exercice already exists for this body part');
                     // db["2016-10-25"]["Klatka piersowa"]["Wyciskanie hantli"] = {
                     //     repeatCount: 20,
                     //     seriesCount: 30
@@ -199,22 +196,22 @@ $(function() {
                         repeatCount: repeatCount
                     }
                 } else {
-                    console.log('NIE Istnieje jeszcze zapisane to cwiczenie');
+                    // console.log('There is no such exercise in the database');
                     db[currentDate][selectedBodyPart][selectedExercise] = {
                         seriesCount: seriesCount,
                         repeatCount: repeatCount
                     }
                 }
-            } else { //jesli nie ma takiego body parta
-                db[currentDate][selectedBodyPart] = {}; //to trzeba go utworzyc
-                db[currentDate][selectedBodyPart][selectedExercise] = { //nastepnie tworze cwiczenie
+            } else { //if this pody part doesn't exist
+                db[currentDate][selectedBodyPart] = {}; //we need to create it
+                db[currentDate][selectedBodyPart][selectedExercise] = { //and then creating the exercise
                     seriesCount: seriesCount,
                     repeatCount: repeatCount
                 }
             }
-            console.log(db);
-        } else { //jesi w ogole nie ma takiej daty w bazie
-            console.log('Tej daty nie ma w bazie', currentDate);
+            // console.log(db);
+        } else { //if there is no such date in the database yet
+            // console.log('There is no such date in the database', currentDate);
             db[currentDate] = {}; //wtedy musze utworzyc nowy obiekt
             db[currentDate][selectedBodyPart] = {} // tworze obiekt z cwiczeniem
             db[currentDate][selectedBodyPart][selectedExercise] = { //nastepnie tworze cwiczenie
@@ -237,8 +234,8 @@ $(function() {
         var currentDate = $(this).attr('data-date');
         console.log('Removing....', bodyPart, currentDate);
         delete db[currentDate][bodyPart]; // https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Operatory/Operator_delete
-        saveDataToBackend(); //musimy wyslac do firebase
-        renderView(); //jeszcze raz wyswietlic
+        saveDataToBackend(); //sending data to Firebase
+        renderView(); //and display it agai
     });
 
     // Initializing DatePicker
