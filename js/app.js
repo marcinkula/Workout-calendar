@@ -1,23 +1,20 @@
 $(function() {
     console.log('Project start!');
-    getDataFromBackend();
 
-    // http://momentjs.com - library for tormatting the date
-    // We are setting current date here
+    var db = {};
+
+    // var db = {
+    //     "2019-10-20": {
+    //         "Klatka piersiowa": {
+    //             "Wyciskanie hantli": {
+    //                 repeatCount: 1,
+    //                 seriesCount: 1
+    //             }
+    //         }
+    //     }
+    // };
+
     var currentDate = moment().format('YYYY-MM-DD');
-    $('#selected-date').html(currentDate);
-
-
-    var db = {
-        "2019-10-20": {
-            "Klatka piersiowa": {
-                "Wyciskanie hantli": {
-                    repeatCount: 1,
-                    seriesCount: 1
-                }
-            }
-        }
-    };
 
     var muscleGroups = {
         'Klatka piersiowa': ['Wyciskanie sztangi na ławce poziomej', 'Wyciskanie hantli na ławce poziomej',
@@ -42,9 +39,85 @@ $(function() {
     }
 
     var detailedTemplate = '<div>' +
-        '<input id="seriesCount" placeholder="Ilość serii"><br/>' +
-        '<input id="repeatCount" placeholder="Liczba powtorzen">' +
+        '<input type="number" id="seriesCount" placeholder="Ilość serii"><br/>' +
+        '<input type="number" id="repeatCount" placeholder="Liczba powtorzen">' +
         '</div>';
+
+    function saveDataToBackend() {
+        firebase
+            .database()
+            .ref('db')
+            .set(db);
+    }
+
+    function getDataFromBackend() {
+        firebase
+            .database()
+            .ref('db') //odwołujemy się do konkretnego klucza
+            .on('value', function(data) {
+                console.log(data.val());
+                db = data.val();
+                renderView();
+            });
+    }
+
+    function renderView() {
+
+        $('#savedExercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
+        var resultHtml = ''; //tu bede doklejac wszystko
+        var bodyParts = db[currentDate]; //klatka piersiowa, plecy, barki itd
+        console.log('bodyParts', bodyParts);
+        for (var item in bodyParts) {
+            console.log(item);
+            resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
+            console.log('db[currentDate][item]', db[currentDate][item]);
+
+            //guzik do kasowania
+            resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-date="' + currentDate + '" data-part="' + item + '"></button>'; //identyfikujemy co mamy wywalic
+
+
+            var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
+            for (var itemChild in exerciseObj) { //iteruje po obiekcie z cwiczeniami
+                console.log(itemChild);
+                resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
+                console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
+                resultHtml += '<h5>Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
+                    ' <br>liczba powtorzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
+            }
+        }
+
+        $('#savedExercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
+    }
+
+
+    function changeMainView() {
+        // http://bootstrap-datepicker.readthedocs.io/en/latest/markup.html
+        // This is to save the embedded datepicker:
+        var selectedDate = $('#datepicker').datepicker('getFormattedDate');
+        console.log('selectedDate: ', selectedDate);
+        currentDate = selectedDate; //przypisuje wybrana date do zmiennej currentDate ktorej uzywam w innych czesciach aplikacji
+        $('#selected-date').html(selectedDate);
+        getDataFromBackend();
+        var selectedBodyPart = $('#musclegroup').val('');
+        var selectedExercise = $('#exercise').val('');
+        var seriesCount = $('#seriesCount').val('');
+        var repeatCount = $('#repeatCount').val('');
+
+    }
+
+    //http://www.w3schools.com/js/js_dates.asp
+    //Using new Date(), creates a new date object with the current date and time
+    function today() {
+        return new Date(); //local date on my computer in js
+    }
+
+
+    getDataFromBackend(); //pobieram dane z Firebase
+
+    // http://momentjs.com - library for tormatting the date
+    // We are setting current date here
+
+    $('#selected-date').html(currentDate);
 
     // Tworzenie zaleznej listy http://jsfiddle.net/arunpjohny/2pza5/
     var exerciseElement = $('#exercise');
@@ -60,8 +133,12 @@ $(function() {
         $('#exercise-detials').html(detailedTemplate); //na koncu doklejam templatke z imputami
     });
 
-
-    //Kiedy klikam na save
+    $('body').on('change', 'input[type="number"]', function() {
+            if ($(this).val() < 0) {
+                $(this).val(0);
+            }
+        })
+        //Kiedy klikam na save
 
     $('#saveDetails').on('click', function() {
         var selectedBodyPart = $('#musclegroup').val();
@@ -76,10 +153,12 @@ $(function() {
         // console.log('repeatCount: ', repeatCount);
 
         // Check if any body part is selected
-        if (selectedBodyPart.length < 1)  {
-            console.log('Niewypelniony forumlarz!');
+        if (selectedBodyPart.length < 1) {
+            alert('Niewypelniony forumlarz!');
             return;
         }
+
+        //Uaktualnianie modelu danych
         // Check if there is a record in db with this date
         if (db[currentDate] !== undefined) {
             console.log('Ta data juz jest w bazie');
@@ -124,98 +203,25 @@ $(function() {
             console.log(db);
         }
         //dopiero jak zmiany sa zapisane w modelu to moge renderowac wynik
-        renderAfterSave();
+        renderView();
 
         //function uploading data to Firebase
         saveDataToBackend()
 
     });
 
-
-    function renderAfterSave() {
-
-        $('#savedExercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
-        var resultHtml = ''; //tu bede doklejac wszystko
-        var bodyParts = db[currentDate]; //klatka piersiowa, plecy, barki itd
-        console.log('bodyParts', bodyParts);
-        for (var item in bodyParts) {
-            console.log(item);
-            resultHtml += '<h3>' + item + '</h3>'; //kazdy body part bedzie w h3
-            console.log('db[currentDate][item]', db[currentDate][item]);
-
-            //guzik do kasowania
-            resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-date="'+ currentDate +'" data-part="' + item + '"></button>';
-
-
-            var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
-            for (var itemChild in exerciseObj) { //iteruje po obiekcie z cwiczeniami
-                console.log(itemChild);
-                resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
-                console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
-                resultHtml += '<h5>Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
-                    ' <br>liczba powtorzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
-            }
-        }
-
-        $('#savedExercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
-    }
-
-
-    function changeMainView() {
-        // http://bootstrap-datepicker.readthedocs.io/en/latest/markup.html
-        // This is to save the embedded datepicker:
-        var selectedDate = $('#datepicker').datepicker('getFormattedDate');
-        console.log('selectedDate: ', selectedDate);
-        currentDate = selectedDate;
-        $('#selected-date').html(selectedDate);
-        getDataFromBackend();
-        var selectedBodyPart = $('#musclegroup').val('');
-        var selectedExercise = $('#exercise').val('');
-        var seriesCount = $('#seriesCount').val('');
-        var repeatCount = $('#repeatCount').val('');
-
-    }
-
-    //http://www.w3schools.com/js/js_dates.asp
-    //Using new Date(), creates a new date object with the current date and time
-    function today() {
-        return new Date(); //local date on my computer in js
-    }
-
-
     $('body').on('click', '.remove-part', function() {
         var bodyPart = $(this).attr('data-part');
         var currentDate = $(this).attr('data-date');
         console.log('Removing....', bodyPart, currentDate);
         delete db[currentDate][bodyPart]; // https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Operatory/Operator_delete
-        saveDataToBackend();
-        renderAfterSave();
+        saveDataToBackend(); //musimy wyslac do firebase
+        renderView(); //jeszcze raz wyswietlic
     });
-
-    function saveDataToBackend() {
-        firebase
-            .database()
-            .ref('db')
-            .set(db);
-    }
-
-    function getDataFromBackend() {
-        firebase
-            .database()
-            .ref('db') //odwołujemy się do konkretnego klucza
-            .on('value', function (data) {
-                console.log(data.val());
-                db = data.val();
-                renderAfterSave();
-            });
-    }
-
-
 
     // Initializing DatePicker
     $('#datepicker')
         .datepicker({
-            startView: 0,
             format: "yyyy-mm-dd"
         })
         .on("changeDate", changeMainView);
