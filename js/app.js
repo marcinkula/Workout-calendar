@@ -1,8 +1,8 @@
 $(function() {
-    console.log('Project start!');
 
     var db = {};
 
+    //data basemodel:
     // var db = {
     //     "2019-10-20": {
     //         "Klatka piersiowa": {
@@ -30,18 +30,45 @@ $(function() {
             'Martwy ciąg'
         ],
 
-        'Barki': ['Wyciskanie hantli nad głowę', 'Wyciskanie hantli nad głową', 'Szrugsy', 'Wzniosy hantli bokiem'],
-        'Biceps': ['Uginanie ramion ze sztangą prostą', 'Uginanie ramion z hantlami', 'Uginanie ramion ze sztangą łamaną'],
-        'Triceps': ['Wyciskanie hantli zza głowy', 'Wyciskanie francuskie sztangi leżąc', 'Pompki na poręczach'],
-        'Nogi': ['Przysiady', 'Wypychanie nóg na suwnicy', 'Prostowaie nóg siedząc', 'Prostowanie nóg leżąc'],
-        'Brzuch': ['Brzuszki', 'Abbc', 'DDS', 'RRR'],
+        'Barki': ['Wyciskanie sztangi sprzed głowy', 'Wyciskanie sztangi zza głowy', 'Wyciskanie sztangielek', 'Arnoldki',
+            'Unoszenie sztangielek bokiem w górę', 'Unoszenie sztangielek w opadzie tułowia', 'Podciąganie sztangi wzdłuż tułowia',
+            'Podciąganie sztangielek wzdłuż tułowia', 'Unoszenie ramion w przód ze sztangą', 'Unoszenie ramion w przód ze sztangielkami',
+            'Unoszenie ramion w przód z linkami wyciągu', 'Unoszenie ramion bokiem w górę z linkami wyciągu', 'Odwrotne rozpiętki (na linkach)'
+        ],
+
+        'Biceps': ['Uginanie ramion ze sztangą stojac podchwytem', 'Uginanie ramion ze sztangielkami stojąc podchwytem', 'Uginanie ramion ze sztangielkami stojąc (uchwyt „młotkowy”)',
+            'Uginanie ramion ze sztangą na „modlitewniku”', 'Uginanie ramienia ze sztangielką na „modlitewniku”', 'Uginanie ramion ze sztangielkami w siadzie na ławce skośnej',
+            'Uginanie ramienia ze sztangielką w siadzie-w podporze o kolano', 'Uginanie ramion podchwytem stojąc-z rączką wyciągu', 'Uginanie ramion ze sztanga nachwytem stojąc',
+            'Uginanie ramion ze sztanga nachwytem na „modlitewniku”'
+        ],
+
+        'Triceps': ['Prostowanie ramion na wyciągu stojąc', 'Wyciskanie „francuskie”sztangi w siadzie', 'Wyciskanie “francuskie” jednorącz sztangielki w siadzie',
+            'Wyciskanie „francuskie” sztangi w leżeniu', 'Wyciskanie „francuskie”sztangielki w leżeniu', 'Prostownie ramienia ze sztangielką w opadzie tułowia',
+            'Prostowanie ramion na wyciągu w płaszczyźne poziomej stojąc', 'Pompki na poręczach', 'Pompki w podporze tyłem',
+            'Prostowanie ramienia podchwytem na wyciągu stojąc', 'Wyciskanie w leżeniu na ławce poziomej wąskim uchwytem'
+        ],
+
+
+        'Nogi': ['Przysiady ze sztangą na barkach', 'Przysiady ze sztangą trzymaną z przodu', 'Przysiady na suwnicy skośnej',
+            'Prostowanie nóg w siadzie', 'Wypychanie ciężaru na suwnicy', 'Uginanie nóg w leżeniu', 'Przysiady wykroczne', 'Wysoki step za sztangą/sztangielkami',
+            'Odwodzenie nogi w tył', 'Ściąganie kolan w siadzie', 'Przywodzenie nóg do wewnątrz', 'Odwodzenie nóg na zewnątrz',
+            '”Martwy ciąg”na prostych nogach', 'Wspiecia na palce w staniu', 'Wspięcia na palce w siadzie', 'Wspięcia na palce na „HACK-MASZYNIE”'
+        ],
+
+
+        'Brzuch': ['Skłony w leżeniu płasko', 'Skłony w leżeniu głową w dół', 'Unoszenie nóg w leżeniu na skośnej ławce', 'Unoszenie nóg w zwisie na drążku',
+            'Unoszenie nóg w podporze', 'Spinanie/unoszenie kolan w leżeniu płasko', 'Skłony tułowia z linką wyciągu siedząc',
+            'Skręty tułowia', 'Skłony tułowia z linką wyciągu klęcząc', 'Skłony boczne', 'Skłony boczne na ławce', 'Skręty tułowia w leżeniu'
+        ],
 
     }
 
     var detailedTemplate = '<div>' +
-        '<input type="number" id="seriesCount" placeholder="Ilość serii"><br/>' +
-        '<input type="number" id="repeatCount" placeholder="Liczba powtorzen">' +
+        '<input type="number" data-toggle="tooltip" data-placement="right" title="Wpisz ilość serii" id="seriesCount" placeholder="Ilość serii"><br/>' +
+        '<input type="number" data-toggle="tooltip" data-placement="right" title="Wpisz ilość powtórzeń" id="repeatCount" placeholder="Liczba powtórzen">' +
         '</div>';
+    //
+    // data-toggle="tooltip" data-placement="right" title="Tooltip on right"
 
     function saveDataToBackend() {
         firebase
@@ -63,7 +90,7 @@ $(function() {
 
     function renderView() {
 
-        $('#savedExercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
+        $('#saved-exercises').html(''); //czyszcze na samym poczatku bo jak zmieniam date chce miec czyste
         var resultHtml = ''; //tu bede doklejac wszystko
         var bodyParts = db[currentDate]; //klatka piersiowa, plecy, barki itd
         console.log('bodyParts', bodyParts);
@@ -73,7 +100,7 @@ $(function() {
             console.log('db[currentDate][item]', db[currentDate][item]);
 
             //guzik do kasowania
-            resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-date="' + currentDate + '" data-part="' + item + '"></button>'; //identyfikujemy co mamy wywalic
+            resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Usuń wybraną grupę mięśniową" data-date="' + currentDate + '" data-part="' + item + '"></button>'; //identyfikujemy co mamy wywalic
 
 
             var exerciseObj = db[currentDate][item]; //dla kazdego body parta tworze obiekt zawierajacy wszystki cwiczenia
@@ -81,12 +108,12 @@ $(function() {
                 console.log(itemChild);
                 resultHtml += '<h4>' + itemChild + '</h4>'; //kazde cwiczenie idzie do diva
                 console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
-                resultHtml += '<h5>Ilosc serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
-                    ' <br>liczba powtorzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
+                resultHtml += '<h5>Ilość serii: ' + exerciseObj[itemChild].seriesCount + //seriesCount i repeatCount zawsze jest takie samo wiec moge tak sie do nich dostac (przez kropke)
+                    ' <br>Liczba powtórzen: ' + exerciseObj[itemChild].repeatCount + '</h5>';
             }
         }
 
-        $('#savedExercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
+        $('#saved-exercises').html(resultHtml); //na koncu wstrzykuje do diva cale powyzsze
     }
 
 
@@ -108,7 +135,7 @@ $(function() {
     //http://www.w3schools.com/js/js_dates.asp
     //Using new Date(), creates a new date object with the current date and time
     function today() {
-        return new Date(); //local date on my computer in js
+        return new Date(); //local date on my computer
     }
 
 
@@ -140,21 +167,15 @@ $(function() {
         })
         //Kiedy klikam na save
 
-    $('#saveDetails').on('click', function() {
+    $('#save-details').on('click', function() {
         var selectedBodyPart = $('#musclegroup').val();
         var selectedExercise = $('#exercise').val();
         var seriesCount = $('#seriesCount').val();
         var repeatCount = $('#repeatCount').val();
 
-        console.log('Saving...');
-        // console.log('selectedBodyPart: ', selectedBodyPart);
-        // console.log('selectedExercise: ', selectedExercise);
-        // console.log('seriesCount: ', seriesCount);
-        // console.log('repeatCount: ', repeatCount);
-
         // Check if any body part is selected
         if (selectedBodyPart.length < 1) {
-            alert('Niewypelniony forumlarz!');
+            alert('Wybierz grupę mięśniową!');
             return;
         }
 
@@ -202,7 +223,8 @@ $(function() {
             }
             console.log(db);
         }
-        //dopiero jak zmiany sa zapisane w modelu to moge renderowac wynik
+
+        //When all the changes to the database are done we can render view again
         renderView();
 
         //function uploading data to Firebase
@@ -220,6 +242,10 @@ $(function() {
     });
 
     // Initializing DatePicker
+    //https://bootstrap-datepicker.readthedocs.io/en/latest/
+    //https://bootstrap-datepicker.readthedocs.io/en/latest/events.html#changedate
+    //http://stackoverflow.com/questions/22507671/bootstrap-datepicker-change-date-event-doesnt-fire-up-when-manually-editing-date
+
     $('#datepicker')
         .datepicker({
             format: "yyyy-mm-dd"

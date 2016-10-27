@@ -10,27 +10,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="styles/style.css">
-
 </head>
 
 <body id="top">
-
     <nav>
-        <a href="#top">Kalendarz treningowy</a>
+        <a href="#top" data-toggle="tooltip" data-placement="right" title="Powrót do góry strony">Kalendarz treningowy</a>
     </nav>
-
     <div class="container">
         <div class="row">
-
-            <div class="calendar col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="calendar col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div id="datepicker" data-date="today()"></div>
             </div>
-
-            <div class="main col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="main col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <h3 id="selected-date"></h3>
-                <div id="savedExercises"></div>
+                <div id="saved-exercises"></div>
                 <div>
-                    <label>Grupa miesniowa</label>
+                    <label>Grupa mięśniowa</label>
                     <select id="musclegroup" name="musclegroup">
                     <option></option>
                     <option>Klatka piersiowa</option>
@@ -42,18 +37,14 @@
                     <option>Brzuch</option>
                 </select>
                     <br/><br/>
-                    <label>Typ cwiczenia</label>
-                    <select id="exercise" name="exercise" placeholder="Exercises"></select>
+                    <label>Typ ćwiczenia</label>
+                    <select id="exercise" name="exercise" placeholder="exercises"></select>
                 </div>
                 <div id="exercise-detials"></div>
-                <button id="saveDetails" class="btn btn-success">Save</button>
+                <button id="save-details" class="btn btn-success">Save</button>
             </div>
-
         </div>
-
-
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
     <script>
         // Initialize Firebase

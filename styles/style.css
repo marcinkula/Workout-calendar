@@ -12,7 +12,7 @@ body {
 }
 
 #selected-date {
-    color: black;
+    color: #7b1315;
 }
 
 nav {
@@ -23,17 +23,23 @@ nav {
     height: 50px;
     background-color: black;
     text-align: center;
+    z-index: 2;
 }
 
 nav a {
-    color: white;
+    color: #f6efef;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+nav a:hover {
+    color: #C8F2BD;
     text-decoration: none;
 }
 
-nav + .container {
+nav+.container {
     padding: 66px;
 }
-
 
 #title {
     text-align: center;
@@ -51,14 +57,41 @@ h3 {
     font-weight: bold;
 }
 
-
 h4 {
-    color: #7b1315;
+    color: #537865;
     font-weight: bolder;
 }
 
 h5 {
-    color:#101010;
+    color: #101010;
     font-weight: bolder;
+}
 
+.btn-success {
+    color: #fff;
+    background-color: #6B9B83;
+    border-color: #6B9B83;
+    margin-top: 13px
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #537865;
+    border-color: #537865;
+}
+
+button.remove-part.btn.btn-danger.btn-sm.glyphicon.glyphicon-trash {
+    vertical-align: super;
+}
+
+/*calendar elements*/
+
+th.datepicker-switch {
+    color: #7b1315;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+th.dow {
+    font-weight: bold;
 }
