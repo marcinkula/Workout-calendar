@@ -8,11 +8,11 @@ You may modify your details at any time. So cool, isn't it?
 * Please take into account that my application is configured on my Firebase account so if you want to have your own application you would need to configure your own.
 
 ##Technology used
-*HTML5
-*CSS3
-*JQUERY
-*BOOTSTRAP
-*FIREBASE
+* HTML5
+* CSS3
+* JQUERY
+* BOOTSTRAP
+* FIREBASE
 
 ##License
 Workout-log-calendar is licensed under The MIT License (MIT).
