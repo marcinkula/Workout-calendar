@@ -1,7 +1,7 @@
 # Workout-log-calendar
 Simple application to log workouts.
 
-##How does it work?
+##About Workout-log-calendar
 * Have you ever entered the gym and then wasted some time trying to recall your previous workout routine and then wasted other precious minutes trying to plan your current routine? Me too hance the need to create this application :)
 It's very simple to use.Simply pick the date and add/remove your simple exercises, choose number of series and repeats.
 You may modify your details at any time. So cool, isn't it?
