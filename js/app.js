@@ -97,7 +97,6 @@ $(function() {
             //removal button
             resultHtml += '<button class="remove-part btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Usuń wybraną grupę mięśniową" data-date="' + currentDate + '" data-part="' + item + '"></button>'; //identyfikujemy co mamy wywalic
 
-
             var exerciseObj = db[currentDate][item]; //for each body part I create object containing all exercises
             for (var itemChild in exerciseObj) { //itering through my object by exercises
                 // console.log(itemChild);
