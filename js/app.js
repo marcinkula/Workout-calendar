@@ -102,7 +102,7 @@ $(function() {
 
 
             var exerciseObj = db[currentDate][item]; //for each body part I create object containing all exercises
-            for (var itemChild in exerciseObj) { //itering through my object with exercises
+            for (var itemChild in exerciseObj) { //itering through my object by exercises
                 // console.log(itemChild);
                 resultHtml += '<h4>' + itemChild + '</h4>'; //each exercise will be put in h4
                 // console.log('exerciseObj[itemChild]', exerciseObj[itemChild]);
@@ -127,9 +127,9 @@ $(function() {
         var selectedExercise = $('#exercise').val('');
         var seriesCount = $('#seriesCount').val('');
         var repeatCount = $('#repeatCount').val('');
-
     }
 
+    
     //http://www.w3schools.com/js/js_dates.asp
     //Using new Date(), creates a new date object with the current date and time
     function today() {
@@ -202,7 +202,7 @@ $(function() {
                         repeatCount: repeatCount
                     }
                 }
-            } else { //if this pody part doesn't exist
+            } else { //if this body part doesn't exist
                 db[currentDate][selectedBodyPart] = {}; //we need to create it
                 db[currentDate][selectedBodyPart][selectedExercise] = { //and then creating the exercise
                     seriesCount: seriesCount,
@@ -212,9 +212,9 @@ $(function() {
             // console.log(db);
         } else { //if there is no such date in the database yet
             // console.log('There is no such date in the database', currentDate);
-            db[currentDate] = {}; //wtedy musze utworzyc nowy obiekt
-            db[currentDate][selectedBodyPart] = {} // tworze obiekt z cwiczeniem
-            db[currentDate][selectedBodyPart][selectedExercise] = { //nastepnie tworze cwiczenie
+            db[currentDate] = {}; //we need to create a new object
+            db[currentDate][selectedBodyPart] = {} // then we need to create an object with body part
+            db[currentDate][selectedBodyPart][selectedExercise] = { //then creating an exercise
                 seriesCount: seriesCount,
                 repeatCount: repeatCount
             }
@@ -225,7 +225,7 @@ $(function() {
         renderView();
 
         //function uploading data to Firebase
-        saveDataToBackend()
+        saveDataToBackend();
 
     });
 
