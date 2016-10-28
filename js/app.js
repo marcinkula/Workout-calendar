@@ -48,14 +48,11 @@ $(function() {
             'Prostowanie ramienia podchwytem na wyciągu stojąc', 'Wyciskanie w leżeniu na ławce poziomej wąskim uchwytem'
         ],
 
-
         'Nogi': ['”Martwy ciąg”na prostych nogach', 'Odwodzenie nóg na zewnątrz', 'Odwodzenie nogi w tył', 'Prostowanie nóg w siadzie',
             'Przysiady ze sztangą na barkach', 'Przysiady ze sztangą trzymaną z przodu', 'Przysiady na suwnicy skośnej', 'Przysiady wykroczne',
             'Przywodzenie nóg do wewnątrz', 'Ściąganie kolan w siadzie', 'Uginanie nóg w leżeniu', 'Wysoki step za sztangą/sztangielkami',
             'Wspiecia na palce w staniu', 'Wspięcia na palce w siadzie', 'Wspięcia na palce na „HACK-MASZYNIE”', 'Wypychanie ciężaru na suwnicy'
         ],
-
-
 
         'Brzuch': ['Skłony w leżeniu płasko', 'Skłony w leżeniu głową w dół', 'Unoszenie nóg w leżeniu na skośnej ławce', 'Unoszenie nóg w zwisie na drążku',
             'Unoszenie nóg w podporze', 'Spinanie/unoszenie kolan w leżeniu płasko', 'Skłony tułowia z linką wyciągu siedząc',
@@ -91,7 +88,7 @@ $(function() {
         $('#saved-exercises').html(''); //Clearing my div
         var resultHtml = ''; //string where the data will be put
         var bodyParts = db[currentDate];
-        // console.log('bodyParts', bodyParts);
+        console.log('bodyParts', bodyParts);
         for (var item in bodyParts) {
             // console.log(item);
             resultHtml += '<h3>' + item + '</h3>'; //each body part will be put in h3
@@ -176,7 +173,6 @@ $(function() {
             alert('Wybierz grupę mięśniową!');
             return;
         }
-
         //Updating database model
         // Check if there is a record in db with this date
         if (db[currentDate] !== undefined) {
@@ -220,22 +216,21 @@ $(function() {
             }
             console.log(db);
         }
-
-        //When all the changes to the database are done we can render view again
+        //When all the changes to the database are done we can render the view again
         renderView();
-
         //function uploading data to Firebase
         saveDataToBackend();
 
     });
 
+    //removing body part
     $('body').on('click', '.remove-part', function() {
         var bodyPart = $(this).attr('data-part');
         var currentDate = $(this).attr('data-date');
         console.log('Removing....', bodyPart, currentDate);
         delete db[currentDate][bodyPart]; // https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Operatory/Operator_delete
         saveDataToBackend(); //sending data to Firebase
-        renderView(); //and display it agai
+        renderView(); //and display it again
     });
 
     // Initializing DatePicker
