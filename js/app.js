@@ -203,7 +203,7 @@ $(function() {
                     }
                 }
             } else { //if this body part doesn't exist
-                db[currentDate][selectedBodyPart] = {}; //we need to create it
+                db[currentDate][selectedBodyPart] = {}; //create it
                 db[currentDate][selectedBodyPart][selectedExercise] = { //and then creating the exercise
                     seriesCount: seriesCount,
                     repeatCount: repeatCount
@@ -212,8 +212,8 @@ $(function() {
             // console.log(db);
         } else { //if there is no such date in the database yet
             // console.log('There is no such date in the database', currentDate);
-            db[currentDate] = {}; //we need to create a new object
-            db[currentDate][selectedBodyPart] = {} // then we need to create an object with body part
+            db[currentDate] = {}; //creating a new object
+            db[currentDate][selectedBodyPart] = {} // creating an object with body part
             db[currentDate][selectedBodyPart][selectedExercise] = { //then creating an exercise
                 seriesCount: seriesCount,
                 repeatCount: repeatCount
@@ -248,5 +248,6 @@ $(function() {
             format: "yyyy-mm-dd"
         })
         .on("changeDate", changeMainView);
+
 
 });
