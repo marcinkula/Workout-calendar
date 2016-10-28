@@ -2,7 +2,7 @@ $(function() {
 
     var db = {};
 
-    //data basemodel:
+    //database model:
     // var db = {
     //     "2019-10-20": {
     //         "Klatka piersiowa": {
@@ -129,7 +129,7 @@ $(function() {
         var repeatCount = $('#repeatCount').val('');
     }
 
-    
+
     //http://www.w3schools.com/js/js_dates.asp
     //Using new Date(), creates a new date object with the current date and time
     function today() {
